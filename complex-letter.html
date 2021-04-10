@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style>
+  body {
+    padding: 8px 64px;
+}
+</style>
+</head>
+  
+<body>  
+  <p id="text">Text Here</p>
+
+<script>
+    function generateWord(wordLen, startVowel){
+    var someText = "";
+      for (i = 0; i < wordLen; i++){
+        if (startVowel === 0) {
+          if (isEven(i)) {
+            someText += vowArr[getRandomInt(0, vowArr.length)];
+          } else {
+            someText += conArr[getRandomInt(0, conArr.length)];
+          }
+        } else {
+          if (isEven(i)) {
+            someText += conArr[getRandomInt(0, conArr.length)];
+          } else {
+            someText += vowArr[getRandomInt(0, vowArr.length)];
+          }
+        }
+      }
+
+    return someText;
+  }
+
+  // Mixed Vowels
+  // var mVow = ["oa","ou","ea","ei"]; // mid
+  // // Double Vowels
+  // var dVow = ["oo", "ee"];
+  
+
+    function complexLetter(pos, wordLength){
+        // Types of letters can be comples
+        var letterCombo = "hrlnmd";
+        var chosenLetter = getRandomInt(0, letterCombo.length);
+        switch (chosenLetter){
+          case("h"):
+            console.log(chosenLetter);
+            break;
+          
+        }
+
+        // conH + H 
+        var conH_f = "stwp"; // front
+        var conH_mb = "st"; // mid back 
+        // conR + R, R + conR
+        var conR_fm = "pbwgftcds"; // front mid
+        // conL + L
+        var conL_fm = "pfcbgts"; // front mid
+        // L + conL
+        var conL_b = "ndkmt"; // back
+        // N + conR_fm
+        var conN_m = conR_fm; // mid
+        // M + conR_fm
+        var conM_m = conR_fm; // mid
+        // Double Consonant
+        var dCon = "ltsfbrp"; // mid
+        
+        // Letter Positions *CONSONANTS ONLY
+        var frontLetter = [conH_f, conR_fm, conL_fm, "kn"];
+        var midLetter = [conH_mb, conR_fm, conL_fm, conN_m, conM_m, dCon, "ck", "nt"];
+        var backLetter = [conH_mb, conL_b,"ll","ck","rk", "nt","nd", "ng", "mb", "mp"];
+
+        if (pos === 0){
+          // pick front letter
+          return frontLetter[getRandomInt(0, frontLetter.length)];
+        } else if (pos === wordLength) {
+          // pick middle letter
+          return midLetter[getRandomInt(0, wordLength)];
+        } else {
+          // pick back letter
+          return backLetter[getRandomInt(0, wordLength)];
+        }
+    }
+
+    function getArrayLetter(someArray){
+      var arrT = "";
+      for (i = 0; i < someArray.length; i++){
+        if (Array.isArray(someArray[i])){
+          for (j = 0; j < someArray[i].length; j++){
+            if (someArray[i][j].length > 1) {
+              for (k = 0; k < someArray[i][j].length; k++){
+                arrT += someArray[i][j][k];       
+              }
+            }  
+          }
+        } else {
+          arrT += someArray[i];
+        }
+      }
+      return arrT;
+    }
+
+</script>
+  
+</body>
+</html>

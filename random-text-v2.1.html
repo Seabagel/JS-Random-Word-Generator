@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Random Text - EN</title>
+        <style>
+        body {
+            padding: 8px 32px;
+            font-family: sans-serif;
+            font-size: 28px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onclick="location.reload()">
+<script>
+function isEven(n) {
+    return n % 2 == 0;
+}
+
+function getRandomInt(min,max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function genLetters(values,probability,targetArray){
+    for (i = 0; i < values.length; i++){
+        for (j = 0; j < Math.floor(probability[i]); j++){
+            targetArray.push(values[i]);
+        }
+    }
+}
+
+function fillArray(srcArr,trgtArr){
+    for (i = 0; i < srcArr.length; i++){
+        trgtArr.push(srcArr[i]);
+    }
+}
+
+function combineLetters(letterArr,singleLetter,reverse){
+  if (reverse == true){
+    for (var i = 0; i < letterArr.length; i++) {
+      if(i == 0){
+        document.write('"'+singleLetter+letterArr[i]+'"');
+      } else {
+        document.write(',"'+singleLetter+letterArr[i]+'"');
+      }
+    }
+  } else {
+    for (var i = 0; i < letterArr.length; i++) {
+      if(i == 0){
+        document.write('"'+letterArr[i]+singleLetter+'"');
+      } else {
+        document.write(',"'+letterArr[i]+singleLetter+'"');
+      }
+    }
+  }
+}
+
+function generateDozen(){
+    var wordArr = [];
+    var amount = 12;
+    for (var k = 0; k < amount; k++) {
+        wordArr.push(generateWord());
+    }
+    wordArr.sort();
+    return wordArr;
+}
+
+function generateWord(){
+    var vArr = "eaoiu"; // values to return
+    var vProb = [12,10,7,4,2]; // probabilities
+    var v = [];
+    genLetters(vArr,vProb,v);
+
+    var mvArr = ["ea","ee","ei","ie","io","oa","oo","ou"]; // values to return
+    var mvProb = [3,4,5,2,3,4,4,3]; // probabilities STATIC OR RANDOM
+    var mv = [];
+    genLetters(mvArr,mvProb,mv);
+    fillArray(v,mv);
+
+    var cArr = ["b","c","d","f","g","h","j","k","l","m","n","p","q",
+                "r","s","t","v","w","x","y","z"]; // values to return
+    var cProb = [2,3,4,2,4,3,1,1,5,4,6,2,1,8,7,7,1,1,1,1,1]; // probabilities
+    var c = [];
+    genLetters(cArr,cProb,c);
+
+    var fcArr = ["bl","br","ch","cr","dr","fl","fr","gl","gr","kn",
+                "ph","pl","pr","sh","shr","sl","sw","th","thr","tr",
+                "wh","wr"]; // values to return
+    var fcProb = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]; // probabilities
+    var fc = [];
+    genLetters(fcArr,fcProb,fc);
+    fillArray(c,fc)
+
+    var mcArr = ["bb","bl","br","ch","ck","ff","fl","gl","lb","lc",
+                "ld","lg","ll","lm","lp","ls","nb","ng","ns","nt",
+                "nth","pl","pp","rb","rc","rd","rg","rp","rph","rr",
+                "rt","rw","sl","ss","sw","tt"];
+    var mcProb = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+                 2,2,2,2,2,2,2,2,2,2]; // probabilities
+    var mc = [];
+    genLetters(mcArr,mcProb,mc);
+    fillArray(c,mc)
+
+    var bcArr = ["ck","ght","lb","ld","ll","lm","lp","ls","lt","mb",
+                "mp","nd","ng","nt","nth","ph","rb","rc","rd","rf",
+                "rk","rp","rt","sh","th","wn"];
+    var bcProb = [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]; // probabilities
+    var bc = [];
+    genLetters(bcArr,bcProb,bc);
+    fillArray(c,bc)
+
+    var outText = "";
+    var firstLetter = ["fc","fv"];
+    var lastLetter = firstLetter[getRandomInt(0,firstLetter.length)];
+    var wordLen = getRandomInt(3,4);
+
+    for (var i = 0; i < wordLen; i++) {
+        if (lastLetter ==   "fc" || lastLetter ==  "mc" || lastLetter ==  "bc"){
+            switch (lastLetter) {
+                case "fc":
+                    outText += fc[getRandomInt(0,fc.length)];
+                break;
+                case "mc":
+                    outText += mc[getRandomInt(0,mc.length)];
+                break;
+                case "bc":
+                    outText += bc[getRandomInt(0,bc.length)];
+                break;  
+            }       
+            lastLetter = "mv";
+        } else {
+            outText += mv[getRandomInt(0,mv.length)];
+            if (i >= wordLen - 1){
+                lastLetter = "bc";
+            } else {
+                lastLetter = "mc";
+            }
+        }
+    }
+    return outText;
+    // document.write(outText);
+}
+
+var testDozen = generateDozen();
+for (var i = 0; i < testDozen.length; i++) {
+    document.write("<p>"+testDozen[i]+"</p>");
+}
+  
+</script>
+  
+</body>
+</html>

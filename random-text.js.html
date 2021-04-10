@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style>
+  body {
+    padding: 8px 64px;
+}
+</style>
+</head>
+  
+<body>  
+<p id="text">Text Here</p>
+  
+<script>
+  var vowelWeight = [0.127, 0.082, 0.075, 0.0696, 0.0275]; // probabilities
+  var vowels = "eaoiu"; // values to return
+  var consonantWeight = []; // probabilities
+  var consonants = "bcdfghjklmnpqrstvwxyz"; // values to return
+
+  function getLetter (weight,result) {
+    var num = Math.random(),
+        s = 0,
+        lastIndex = weight.length - 1;
+
+    for (var i = 0; i < lastIndex; ++i) {
+        s += weight[i];
+        if (num < s) {
+            return result[i];
+        }
+    }
+
+    return result[lastIndex];
+  };
+
+  console.log(getLetter(vowelWeight, vowels));
+
+  var wordLen = getRandomInt(3,9);
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
+  // https://stackoverflow.com/questions/8877249/generate-random-integers-with-probabilities
+  var word = ""
+  var startVowel = getRandomInt(0,2);
+  for (i = 0; i < wordLen; i++){
+    var iVowel = getRandomInt(0,vowels.length)
+    var iConsonant = getRandomInt(0,consonants.length)
+
+    function isEven(n) {
+      return n % 2 == 0;
+    }
+
+    if (startVowel === 0) {
+      if (isEven(i)) {
+        word += vowels[iVowel];
+      } else {
+        word += consonants[iConsonant];
+      }
+    } else {
+      if (isEven(i)) {
+        word += consonants[iConsonant];
+      } else {
+        word += vowels[iVowel];
+      }
+    }
+  }
+
+  text = document.getElementById("text");
+  var textColor = getRandomInt(0,3);
+  switch (textColor){
+    case 0:
+      text.style.color = "red";
+      break;
+    case 1:
+      text.style.color = "blue";
+      break;
+    case 2:
+      text.style.color = "green";
+      break;
+  }
+  text.style.fontSize = "48px";
+  text.innerHTML = word;
+
+  function vowelMath (num) {
+    return num/61.9*100;
+  }
+
+  // var iWord = "";
+  // for (var i = 0; i < 14; i++) {
+  //   iWord += '"a",'
+  // }
+  // console.log(iWord);
+  // console.log()
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style>
+  body {
+    padding: 8px 32px;
+    font-family: sans-serif;
+    font-size: 28px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+</style>
+</head>
+  
+<body onclick="location.reload()">  
+<p id="text"></p>
+  
+<script>
+  // https://stackoverflow.com/questions/8877249/generate-random-integers-with-probabilities
+ 
+  var vow = "eaoiu"; // values to return
+  var vowProb = [12.7, 8.2, 7.5, 6.9, 2.8]; // probabilities
+  var vowArr = [];
+  fillArray(vow, vowProb, vowArr);
+
+  var con = "tnshrdlcmwfgypbvkjxqz"; // values to return
+  var conProb = [14.6, 10.9, 10.2, 9.8, 9.6, 7.3, 6.5, 4.5, 3.9, 3.8,
+                 3.6, 3.3, 3.2, 3.1, 2.4, 1.5, 1.2, 0.2, 0.2, 0.1]; // probabilities
+  var conArr = [];
+  fillArray(con, conProb, conArr);
+  
+  var wordArr = [];
+  var amount = 12;
+  for (var k = 0; k < amount; k++) {
+    wordArr.push(generateWord(getRandomInt(4,9), getRandomInt(0,2)));
+  }
+  console.log(wordArr);
+
+  var text = document.getElementById("text");
+  for (var j = 0; j < wordArr.length; j++) {
+    var para = document.createElement("p");
+    var t = document.createTextNode(wordArr[j]);
+    para.appendChild(t);
+    var textColor = getRandomInt(0,11);
+    switch (textColor){
+      case 0:
+        para.style.color = "CRIMSON";
+        break;
+      case 1:
+        para.style.color = "RED";
+        break;
+      case 2:
+        para.style.color = "MEDIUMVIOLETRED";
+        break;
+      case 3:
+        para.style.color = "ORANGERED";
+        break;
+      case 4:
+        para.style.color = "DARKORANGE";
+        break;
+      case 5:
+        para.style.color = "REBECCAPURPLE";
+        break;
+      case 6:
+        para.style.color = "DARKVIOLET";
+        break;
+      case 7:
+        para.style.color = "DARKCYAN";
+        break;
+      case 8:
+        para.style.color = "GREEN";
+        break;
+      case 9:
+        para.style.color = "DODGERBLUE";
+        break;
+      case 10:
+        para.style.color = "ROYALBLUE";
+        break;
+    }
+    document.body.appendChild(para);
+    console.log(wordArr[j])
+  }
+
+
+  function generateWord(wordLen, startVowel){
+    var someText = "";
+      for (i = 0; i < wordLen; i++){
+        if (startVowel === 0) {
+          if (isEven(i)) {
+            someText += vowArr[getRandomInt(0, vowArr.length)];
+          } else {
+            someText += conArr[getRandomInt(0, conArr.length)];
+          }
+        } else {
+          if (isEven(i)) {
+            someText += conArr[getRandomInt(0, conArr.length)];
+          } else {
+            someText += vowArr[getRandomInt(0, vowArr.length)];
+          }
+        }
+      }
+
+    return someText;
+  }
+
+  function fillArray(values, probability, targetArray){
+    for (i = 0; i < values.length; i++){
+      for (j = 0; j < Math.floor(probability[i]); j++){
+        targetArray.push(values[i]);
+      }
+    }
+  }
+
+  function isEven(n) {
+    return n % 2 == 0;
+  }
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
+
+  function percentMath (num) {
+    return num/61.9*100;
+  }
+</script>
+  
+</body>
+</html>
